@@ -142,7 +142,7 @@ criterionG = criterionG.to(device)
 from train import train
 from evaluate import evaluate
 
-train_lossG, train_lossD, train_acc = train(netD, netG, train_iterator, optimizerD, optimizerG, criterionD, criterionG, valid_iterator, N_EPOCHS = 2, dirD = drivePath + 'netD.pt', dirG = drivePath + 'netG.pt', interval = 50)
+train_lossG, train_lossD, train_acc = train(netD, netG, train_iterator, optimizerD, optimizerG, criterionD, criterionG, valid_iterator, N_EPOCHS = 2, dirD = drivePath + 'netD.pt', dirG = drivePath + 'netG.pt', interval = 50, valid_interval = 1000)
 
 
 ```
