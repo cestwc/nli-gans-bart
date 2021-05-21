@@ -109,6 +109,8 @@ def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3
 			if i % interval == 0:
 				print(f'[{i:d}/{len(iterator):d}]\tTrain G Loss: {errG.item():.2f} | Train D Loss: {errD.item():.2f} | Train Acc: {acc.item()*100:.1f}%')
 				
+			iters += 1
+			
 			if (iters % (interval * 10) == 0) or ((epoch == N_EPOCHS-1) and (i == len(iterator)-1)):
 				valid_loss, valid_acc = evaluate(d, valid_iterator, lossD)
 				if valid_loss < best_valid_loss:
@@ -116,9 +118,7 @@ def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3
 					torch.save(d.state_dict(), dirD)
 					torch.save(g.state_dict(), dirG)
 					print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
-				d.train()
-				
-			iters += 1
+				d.train()				
 
 			# Save Losses for plotting later
 			G_losses.append(errG.item())
