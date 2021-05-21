@@ -142,35 +142,9 @@ criterionG = criterionG.to(device)
 from train import train
 from evaluate import evaluate
 
-def epoch_time(start_time, end_time):
-	elapsed_time = end_time - start_time
-	elapsed_mins = int(elapsed_time / 60)
-	elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
-	return elapsed_mins, elapsed_secs
-	
-N_EPOCHS = 10
+train_lossG, train_lossD, train_acc = train(netD, netG, train_iterator, optimizerD, optimizerG, criterionD, criterionG, valid_iterator, N_EPOCHS = 2, dirD = drivePath + 'netD.pt', dirG = drivePath + 'netG.pt', interval = 50)
 
-best_valid_loss = float('inf')
 
-for epoch in range(N_EPOCHS):
-    
-	start_time = time.time()
-
-	_, train_loss, train_acc = train(netD, netG, train_iterator, optimizerD, optimizerG, criterionD, criterionG)
-	valid_loss, valid_acc = evaluate(netD, valid_iterator, criterionD)
-
-	end_time = time.time()
-
-	epoch_mins, epoch_secs = epoch_time(start_time, end_time)
-
-	if valid_loss < best_valid_loss:
-		best_valid_loss = valid_loss
-		torch.save(netD.state_dict(), drivePath + 'netD.pt')
-		torch.save(netG.state_dict(), drivePath + 'netG.pt')
-
-	print(f'Epoch: {epoch+1:02} | Epoch Time: {epoch_mins}m {epoch_secs}s')
-	print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
-	print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
 ```
 
 Test
@@ -180,6 +154,16 @@ netD.load_state_dict(torch.load(drivePath + 'netD.pt'))
 test_loss, test_acc = evaluate(netD, test_iterator, criterionD)
 
 print(f'Test Loss: {test_loss:.3f} | Test Acc: {test_acc*100:.2f}%')
+```
+```
+plt.figure(figsize=(10,5))
+plt.title("Generator and Discriminator Loss During Training")
+plt.plot(train_lossG,label="G")
+plt.plot(train_lossD,label="D")
+plt.xlabel("iterations")
+plt.ylabel("Loss")
+plt.legend()
+plt.show()
 ```
 
 Inference
