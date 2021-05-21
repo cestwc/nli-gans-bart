@@ -15,7 +15,7 @@ def evaluate(model, iterator, criterion):
 		for _, batch in enumerate(tqdm(iterator)):
 
 			delimiter = torch.ones(batch.query.shape[0], 1, device = batch.query.device, dtype = torch.long) * 2
-			predictions = model(torch.cat((batch.text, delimiter, batch.query), dim = 1))
+			predictions = model(torch.cat((batch.text, delimiter, batch.query), dim = 1)).logits
 
 			loss = criterion(predictions, batch.label)
 
