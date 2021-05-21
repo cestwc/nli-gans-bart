@@ -197,5 +197,3 @@ def predict_sentiment(model, tokenizer, sentence):
 ```
 predict_sentiment(netD, tokenizer, "This film looks great. </s> The film is terrible")
 ```
-return prediction
-
