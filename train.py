@@ -116,6 +116,8 @@ def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3
 					torch.save(d.state_dict(), dirD)
 					torch.save(g.state_dict(), dirG)
 				d.train()
+				
+			iters += 1
 
 			# Save Losses for plotting later
 			G_losses.append(errG.item())
