@@ -192,6 +192,7 @@ def predict_sentiment(model, tokenizer, sentence):
 	tensor = torch.LongTensor(indexed).to(device)
 	tensor = tensor.unsqueeze(0)
 	prediction = model(tensor)
+	return prediction
 ```
 ```
 predict_sentiment(netD, tokenizer, "This film looks great. </s> The film is terrible")
