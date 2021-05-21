@@ -191,7 +191,7 @@ def predict_sentiment(model, tokenizer, sentence):
 	indexed = [init_token_idx] + tokenizer.convert_tokens_to_ids(tokens) + [eos_token_idx]
 	tensor = torch.LongTensor(indexed).to(device)
 	tensor = tensor.unsqueeze(0)
-	prediction = model(tensor)
+	prediction = model(tensor).logits
 	return prediction
 ```
 ```
