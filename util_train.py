@@ -59,3 +59,13 @@ def noising(query):
 	mask = torch.logical_and(edit_mask, mutate_mask)
 	noise = torch.randint(4, torch.max(query), query.shape, device = query.device)
 	return query.masked_scatter(mask, noise)
+
+# from tutorial
+def categorical_accuracy(preds, y):
+    """
+    Returns accuracy per batch, i.e. if you get 8/10 right, this returns 0.8, NOT 8
+    """
+    top_pred = preds.argmax(1, keepdim = True)
+    correct = top_pred.eq(y.view_as(top_pred)).sum()
+    acc = correct.float() / y.shape[0]
+    return acc
