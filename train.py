@@ -106,15 +106,16 @@ def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3
 			optG.step()
 
 			# Output training stats
-			if i % 2 == 0:
-				print(f'[{i:d}/{len(iterator):d}]\tTrain D Loss: {errD.item():.2f} | Train Acc: {acc.item()*100:.1f}%')
+			if i % 5 == 0:
+				print(f'[{i:d}/{len(iterator):d}]\tTrain G Loss: {errG.item():.2f} | Train D Loss: {errD.item():.2f} | Train Acc: {acc.item()*100:.1f}%')
 				
-			if (iters % 20 == 0) or ((epoch == N_EPOCHS-1) and (i == len(iterator)-1)):
+			if (iters % 50 == 0) or ((epoch == N_EPOCHS-1) and (i == len(iterator)-1)):
 				valid_loss, valid_acc = evaluate(d, valid_iterator, lossD)
 				if valid_loss < best_valid_loss:
 					best_valid_loss = valid_loss
 					torch.save(d.state_dict(), dirD)
 					torch.save(g.state_dict(), dirG)
+					print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
 				d.train()
 				
 			iters += 1
