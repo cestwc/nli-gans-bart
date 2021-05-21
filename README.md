@@ -149,7 +149,7 @@ train_lossG, train_lossD, train_acc = train(netD, netG, train_iterator, optimize
 
 Test
 ```python
-netD.load_state_dict(torch.load(drivePath + 'netD.pt'))
+netD.load_state_dict(torch.load(drivePath + 'netD.pt', map_location = device))
 
 test_loss, test_acc = evaluate(netD, test_iterator, criterionD)
 
