@@ -1,5 +1,5 @@
 import torch
-from tqdm.notebook import tqdm
+# from tqdm.notebook import tqdm
 
 from util_train import categorical_accuracy
 
@@ -12,7 +12,7 @@ def evaluate(model, iterator, criterion):
 
 	with torch.no_grad():
 
-		for _, batch in enumerate(tqdm(iterator)):
+		for _, batch in enumerate(iterator):
 
 			delimiter = torch.ones(batch.query.shape[0], 1, device = batch.query.device, dtype = torch.long) * 2
 			predictions = model(torch.cat((batch.text, delimiter, batch.query), dim = 1)).logits
