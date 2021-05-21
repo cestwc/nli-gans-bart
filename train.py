@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 from tqdm.notebook import tqdm
 
 from util_train import categorical_accuracy, fake_label, pseudocat, noising
