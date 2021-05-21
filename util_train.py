@@ -4,7 +4,7 @@ def fake_label(real_label):
 	fake_label = (real_label.masked_fill(real_label < 2, -1) - torch.randint(1, 3, real_label.shape, device = real_label.device))
 	return fake_label.masked_fill(fake_label < 0, 2)
 
-def prob2idx(queryDistribution, eos_id = eos_token_idx, pad_id = pad_token_idx, init_id = init_token_idx):
+def prob2idx(queryDistribution, eos_id, pad_id, init_id):
 	f_query = torch.argmax(queryDistribution, dim = 2)
 
 	f_query.masked_fill_(f_query < 4, 4)
