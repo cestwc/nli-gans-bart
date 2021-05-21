@@ -6,7 +6,7 @@ from tqdm.notebook import tqdm
 from util_train import categorical_accuracy, fake_label, pseudocat, noising, epoch_time
 from evaluate import evaluate
 
-def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3, dirD = 'netD.pt', dirG = 'netG.pt', best_valid_loss = float('inf')):
+def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3, dirD = 'netD.pt', dirG = 'netG.pt', best_valid_loss = float('inf'), interval = 5):
 
 	# Training Loop
 
@@ -106,10 +106,10 @@ def train(d, g, iterator, optD, optG, lossD, lossG, valid_iterator, N_EPOCHS = 3
 			optG.step()
 
 			# Output training stats
-			if i % 5 == 0:
+			if i % interval == 0:
 				print(f'[{i:d}/{len(iterator):d}]\tTrain G Loss: {errG.item():.2f} | Train D Loss: {errD.item():.2f} | Train Acc: {acc.item()*100:.1f}%')
 				
-			if (iters % 50 == 0) or ((epoch == N_EPOCHS-1) and (i == len(iterator)-1)):
+			if (iters % (interval * 10) == 0) or ((epoch == N_EPOCHS-1) and (i == len(iterator)-1)):
 				valid_loss, valid_acc = evaluate(d, valid_iterator, lossD)
 				if valid_loss < best_valid_loss:
 					best_valid_loss = valid_loss
