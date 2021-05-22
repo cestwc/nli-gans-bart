@@ -8,7 +8,7 @@ init_token_idx = 0
 
 def fake_label(real_label):
 	fake_label = (real_label.masked_fill(real_label < 2, -1) - torch.randint(1, 3, real_label.shape, device = real_label.device))
-	return fake_label.fill(2) # masked_fill(fake_label < 0, 2)
+	return fake_label * 0 + 2 # masked_fill(fake_label < 0, 2)
 
 def prob2idx(queryDistribution, eos_id = eos_token_idx, pad_id = pad_token_idx, init_id = init_token_idx):
 	f_query = torch.argmax(queryDistribution, dim = 2)
